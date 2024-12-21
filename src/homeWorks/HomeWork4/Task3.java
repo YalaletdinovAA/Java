@@ -1,4 +1,4 @@
-package src.main.java.HomeWorks.HomeWork4;
+package src.homeWorks.HomeWork4;
 import java.util.Arrays;
 /*
 Задача3*.Задана строка,состоящая из букв английского алфавита,

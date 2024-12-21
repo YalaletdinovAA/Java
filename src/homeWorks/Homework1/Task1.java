@@ -1,4 +1,4 @@
-package src.main.java.HomeWorks.Homework1;
+package src.homeWorks.Homework1;
 
 /*
  Задача 1. Составить программу вывода на экран в одну строку четырех

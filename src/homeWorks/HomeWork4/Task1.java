@@ -1,4 +1,4 @@
-package src.main.java.HomeWorks.HomeWork4;
+package src.homeWorks.HomeWork4;
 import java.util.Scanner;
 /*
  Задача 1. Для введенной с клавиатуры буквы английского алфавита

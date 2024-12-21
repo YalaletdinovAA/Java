@@ -1,4 +1,4 @@
-package src.main.java.HomeWorks.Homework2;
+package src.homeWorks.Homework2;
 /*
 Задача 3*.
 Напишите Java-программу для объединения данной строки ссамим собой заданное количество раз.
