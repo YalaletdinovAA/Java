@@ -1,11 +1,11 @@
 package src.homeWorks.HomeWork5;
 
-
 import java.util.*;
 
 public class App {
     public static void main(String[] args) {
-       /* Television tv = new Television();
+       /*
+       Television tv = new Television();
         Television tv1 = new Television();
         //Параметры через конструктор
         Television tv2 = new Television("Samsung", 43.5, 30000);
