@@ -1,4 +1,4 @@
-package src.homeWorks.HomeWork7.product;
+package src.main.java.homeworks.homework7.product;
 
 import java.time.LocalDate;
 import java.util.Objects;

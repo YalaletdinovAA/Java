@@ -1,4 +1,4 @@
-package src.homeWorks.HomeWork7.product;
+package src.main.java.homeworks.homework7.product;
 /*
  Задача 1. Расширить программу прошлого домашнего задания.
  Добавить механизм наследования.
