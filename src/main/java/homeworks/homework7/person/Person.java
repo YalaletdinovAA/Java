@@ -1,6 +1,6 @@
-package src.homeWorks.HomeWork7.person;
+package src.main.java.homeworks.homework7.person;
 
-import src.homeWorks.HomeWork7.product.DiscountProduct;
+import src.main.java.homeworks.homework7.product.DiscountProduct;
 
 import java.time.LocalDate;
 
