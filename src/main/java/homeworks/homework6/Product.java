@@ -1,4 +1,4 @@
-package src.homeWorks.HomeWork6;
+package src.main.java.homeworks.homework6;
 
 import java.util.Objects;
 
