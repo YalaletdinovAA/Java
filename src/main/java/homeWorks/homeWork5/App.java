@@ -1,4 +1,4 @@
-package src.homeWorks.HomeWork5;
+package src.main.java.homeWorks.homeWork5;
 
 import java.util.*;
 
