@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-Формулировка задания:1.
-Создать классы Покупатель (Person) и Продукт (Product).
+Формулировка задания:
+1.Создать классы Покупатель (Person) и Продукт (Product).
 Характеристики Покупателя: имя, сумма денег и  пакет с продуктами(массив объектов типа Продукт).
  Имя не может быть пустой строкой. Деньги немогут быть отрицательным числом.
  Если Покупатель может позволить себе Продукт, то Продукт добавляетсяв пакет.
@@ -26,65 +26,101 @@ import java.util.List;
   6. Программа реализуется в отдельной ветке git homeworks/homework06.При   сохранении   состояния   программы   (коммиты)
   пишется   сообщение   с описанием хода работы по задаче. В корне папки с программой должен быть файл
    .gitignore.Программа локально коммитится и публикуется в репозиторий GitHub напроверку.
-   Тестовые данные:Ожидаемый результат :
-   Павел   Андреевич   =   10000;   АннаПетровна = 2000, Борис = 10Хлеб = 40; Молоко = 60; Торт = 1000;
-   Кофе растворимый = 879; Масло = 150;
-   Павел Андреевич ХлебПавел Андреевич  Масло
-   Анна Петровна  Кофе растворимый
-   Анна Петровна   Молоко
-   Анна Петровна   Молоко
-   Анна Петровна   Молоко
-   Анна Петровна  Торт
-   Борис Торт
-   Павел Андреевич  Торт
-   END
-   Павел Андреевич купил Хлеб
-   Павел Андреевич  купил Масло
-   Анна   Петровна       купила   Коферастворимый
-   Анна Петровна  купила Молоко
-   Анна Петровна  купила Молоко
-   Анна Петровна  купила Молоко
-   Анна Петровна  не может позволить себеТорт
-   Борис  не может позволить себе Торт
-   Павел Андреевич купил Торт
-   Павел Андреевич - Хлеб, Масло, Торт
-   Анна   Петровна   -   Кофе   растворимый,Молоко, Молоко, Молоко
-   Борис -  Ничего не куплено
-   Женя = 0;Мороженое = 200
-   Женя Мороженое
-   END
-   Женя    не   может   позволить   себеМороженое
-   Женя -  Ничего не куплено
-   Света = -3Макароны = 800;Света Макароны
-   END
-   Деньги не могут быть отрицательными
+   Тестовые данные:
 
+ Павел Андреевич = 10000; Анна Петровна = 2000, Борис = 10
+ Хлеб = 40; Молоко = 60; Торт = 1000; Кофе растворимый = 879; Масло = 150;
+
+ Павел Андреевич Хлеб
+ Павел Андреевич  Масло
+ Анна Петровна  Кофе растворимый
+ Анна Петровна   Молоко
+ Анна Петровна   Молоко
+ Анна Петровна   Молоко
+ Анна Петровна  Торт
+ Борис Торт
+ Павел Андреевич  Торт
+ END
+
+ Женя = 0;
+ Мороженое = 200
+ Женя Мороженое
+ END
+
+ Света = -3
+ Макароны = 800;
+ Света Макароны
+ END
+
+Ожидаемый результат:
+
+Павел Андреевич купил Хлеб
+ Павел Андреевич  купил Масло
+ Анна Петровна  купила Кофе
+ растворимый
+ Анна Петровна  купила Молоко
+ Анна Петровна  купила Молоко
+ Анна Петровна  купила Молоко
+ Анна Петровна  не может позволить себе
+ Торт
+ Борис  не может позволить себе Торт
+ Павел Андреевич купил Торт
+ Павел Андреевич - Хлеб, Масло, Торт
+ Анна Петровна - Кофе растворимый,
+ Молоко, Молоко, Молоко
+ Борис -  Ничего не куплено
+
+ Женя не может позволить себе
+ Мороженое
+ Женя -  Ничего не куплено
+
+ Деньги не могут быть отрицательными
  */
 public class Person {
     private String name;
-    private int money;
+    private double money;
+    private List<Product> basket;
 
-    public Person(String name, int money) {
-        this.name = name;
-        this.money = money;
+    public Person(String name, double money) {
+        if (name == null || name.isEmpty()) {
+            System.out.println("Имя не может быть пустым");
+            this.name = "";
+        } else {
+            this.name = name;
+        }
+
+        if (money < 0) {
+            System.out.println("Деньги не могут быть отрицательными");
+            this.money = 0;
+        } else {
+            this.money = money;
+        }
+
+        this.basket = new ArrayList<>();
     }
+
 
     public String getName() {
         return name;
     }
 
-    private List<Product>products = new ArrayList<>();
+    public double getMoney() {
+        return money;
+    }
 
-    public void addProductToBasket(Product product) {
+    public List<Product> getBasket() {
+        return basket;
+    }
 
-        if (this.money >= product.getPrice()) {
-            this.products.add(product);
-            money-=product.getPrice();
+    // Метод для покупки продукта
+    public void buyProduct(Product product) {
+        if (product != null && money >= product.getPrice()) {
+            basket.add(product);
+            money -= product.getPrice();
             System.out.println(name + " купил " + product.getName());
-        }else{
-            System.out.println( name + " не может позволить себе " + product.getName());
+        } else if (product != null) {
+            System.out.println(name + " не может позволить себе " + product.getName());
         }
-
     }
 
     @Override
@@ -92,7 +128,20 @@ public class Person {
         return "Person{" +
                 "name='" + name + '\'' +
                 ", money=" + money +
-                ", products=" + products +
+                ", basket=" + basket +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Person person = (Person) obj;
+        return Double.compare(person.money, money) == 0 && name.equals(person.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode() + Double.hashCode(money);
     }
 }
