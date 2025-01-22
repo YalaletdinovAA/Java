@@ -3,66 +3,75 @@ package src.main.java.homeworks.homework7.product;
 import java.time.LocalDate;
 import java.util.Objects;
 
+
 public class DiscountProduct extends Product {
+    private double discount;  // Процент скидки
+    private LocalDate discountExpiryDate;  // Срок действия скидки
 
-    private Integer discaunt;
-    private LocalDate discauntDate;
-    private Boolean isDiscounted;
+    public DiscountProduct(String name, double price, double discount, String discountExpiryDate) {
+        super(name, price);
 
-    public DiscountProduct(Integer price, String name, Integer discaunt, LocalDate discauntDate, Boolean isDiscounted) {
-        super(price, name);
-        this.discaunt = discaunt;
-        this.discauntDate = discauntDate;
-        this.isDiscounted = isDiscounted;
+
+        if (discount <= 0 || discount >= 100) {
+            this.discount = 0; // Если скидка неверна, применяем нулевую скидку
+        } else {
+            this.discount = discount;
+        }
+
+        // Срок действия скидки
+        LocalDate expiryDate = LocalDate.parse(discountExpiryDate);
+        if (expiryDate.isBefore(LocalDate.now())) {
+            this.discountExpiryDate = LocalDate.now(); // Устанавливаем текущую дату как срок действия скидки
+        } else {
+            this.discountExpiryDate = expiryDate;
+        }
     }
 
-    public Integer getDiscaunt() {
-        return discaunt;
+    @Override
+    public double getPrice() {
+        // Если скидка еще актуальна, применяется скидка
+        if (LocalDate.now().isBefore(discountExpiryDate)) {
+            return super.getPrice() * (1 - discount / 100);
+        } else {
+            return super.getPrice();  // Если скидка прошла, показываем обычную цену
+        }
     }
 
-    public void setDiscaunt(Integer discaunt) {
-        this.discaunt = discaunt;
+    public double getDiscount() {
+        return discount;
     }
 
-    public LocalDate getDiscauntDate() {
-        return discauntDate;
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
-    public void setDiscauntDate(LocalDate discauntDate) {
-        this.discauntDate = discauntDate;
+    public LocalDate getDiscountExpiryDate() {
+        return discountExpiryDate;
     }
 
-    public Boolean getDiscounted() {
-        return isDiscounted;
+    public void setDiscountExpiryDate(LocalDate discountExpiryDate) {
+        this.discountExpiryDate = discountExpiryDate;
     }
-
-    public void setDiscounted(Boolean discounted) {
-        isDiscounted = discounted;
-    }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         DiscountProduct that = (DiscountProduct) o;
-        return Objects.equals(discaunt, that.discaunt) && Objects.equals(discauntDate, that.discauntDate) && Objects.equals(isDiscounted, that.isDiscounted);
+        return Double.compare(discount, that.discount) == 0 && Objects.equals(discountExpiryDate, that.discountExpiryDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), discaunt, discauntDate, isDiscounted);
+        return Objects.hash(discount, discountExpiryDate);
     }
 
     @Override
     public String toString() {
         return "DiscountProduct{" +
-                "name="+ super.getName()+
-                ", price="+ super.getPrice()+
-                ", discaunt=" + discaunt +
-                ", discauntDate=" + discauntDate +
-                ", isDiscounted=" + isDiscounted +
+                "discount=" + discount +
+                ", discountExpiryDate=" + discountExpiryDate +
                 '}';
     }
+
 }
