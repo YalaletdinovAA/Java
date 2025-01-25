@@ -3,93 +3,157 @@ package src.main.java.homeworks.homework8;
 import java.io.*;
 import java.util.*;
 
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 public class App {
     public static void main(String[] args) {
-       /* Scanner scanner = new Scanner(System.in);
+
+        String inputFile = "src/main/java/homeworks/homework8/input.txt"; // Путь к входному файлу
+        String outputFile = "src/main/java/homeworks/homework8/output.txt"; // Путь к выходному файлу
 
 
-        List<Person> persons = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            System.out.println("Введите имя покупателя : ");
-            String name = scanner.next();
-            System.out.println("Введите количество денег : ");
-            int money = scanner.nextInt();
-            Person person = new Person(name, money);
-            persons.add(person);
-        }
+        List<Person> customers = new ArrayList<>();
+        Map<String, Product> productCatalog = new HashMap<>();
+        List<String> actions = new ArrayList<>();
 
-        List<Product> products = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            System.out.println("Введите название продукта : ");
-            String name = scanner.next();
-            System.out.println("Введите стоимость : ");
-            int price = scanner.nextInt();
-            Product product = new Product();
-            product.setName(name);
-            product.setPrice(price);
-            products.add(product);
-        }
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
+            String line;
 
-
-        System.out.println("Начинаем покупку : ");
-
-        while (true) {
-
-            System.out.println("Введите имя покупателя: ");
-            String name = scanner.next();
-
-            if (name.equals("END")) {
-                break;
-            }
-
-            for (Person person : persons) {
-                if (person.getName().equals(name)) {
-                    System.out.println("Введите название продукта: ");
-                    String nameProduct = scanner.next();
-
-                    for (Product product : products) {
-                        if (product.getName().equals(nameProduct)) {
-                            person.addProductToBasket(product);
-                        }
+            // Чтение данных о покупателях
+            line = reader.readLine();
+            if (line != null) {
+                String[] customersData = line.split(";");
+                for (String customerData : customersData) {
+                    customerData = customerData.trim();
+                    String[] details = customerData.split("=");
+                    if (details.length != 2) {
+                        System.out.println("Некорректные данные покупателя: " + customerData);
+                        continue;
+                    }
+                    String name = details[0].trim();
+                    try {
+                        double money = Double.parseDouble(details[1].trim());
+                        customers.add(new Person(name, money));
+                    } catch (NumberFormatException e) {
+                        System.out.println("Ошибка преобразования денег: " + customerData);
                     }
                 }
             }
-        }
 
-        for (Person person : persons) {
-            System.out.println(person);
-        }
-*/
-        try{
-            String string;
-            FileReader fileReader = new FileReader("src/main/java/homeworks/homework8/input.txt");
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            FileWriter fileWriter = new FileWriter("src/main/java/homeworks/homework8/output.txt");
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            while(bufferedReader.ready()){
-                string = bufferedReader.readLine();
-                bufferedWriter.write(string + "\r\n");
-
+            // Чтение данных о продуктах
+            line = reader.readLine();
+            if (line != null) {
+                String[] productData = line.split(";");
+                for (String productInfo : productData) {
+                    productInfo = productInfo.trim();
+                    String[] details = productInfo.split("=");
+                    if (details.length != 2) {
+                        System.out.println("Некорректные данные продукта: " + productInfo);
+                        continue;
+                    }
+                    String name = details[0].trim();
+                    try {
+                        double price = Double.parseDouble(details[1].trim());
+                        productCatalog.put(name, new Product(name, price));
+                    } catch (NumberFormatException e) {
+                        System.out.println("Ошибка преобразования цены: " + productInfo);
+                    }
+                }
             }
-            bufferedReader.close();
-            fileReader.close();
-            bufferedWriter.flush();
-            bufferedWriter.close();
-        }catch (IOException ioException){
-            ioException.printStackTrace();
+
+            // Чтение действий
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                if (line.equals("END")) {
+                    break;
+                }
+                actions.add(line);
+            }
+
+            // Обработка действий
+            for (String action : actions) {
+                String[] details = action.split(" ");
+                if (details.length < 2) {
+                    System.out.println("Некорректная строка действия: " + action);
+                    continue;
+                }
+                String customerName = details[0] + " " + details[1];
+                String productName = details.length > 2 ? action.substring(customerName.length()).trim() : "";
+
+                Person customer = customers.stream()
+                        .filter(c -> c.getName().equals(customerName))
+                        .findFirst()
+                        .orElse(null);
+                Product product = productCatalog.get(productName);
+
+                if (customer != null && product != null) {
+                    customer.addProduct(product);
+                } else {
+                    System.out.println("Действие невозможно: " + action);
+                }
+            }
+
+            // Запись результатов в файл
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+                for (Person customer : customers) {
+                    writer.write(customer.toString());
+                    writer.newLine();
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
-
-
 }
 
+    /*public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Person[] people = new Person[5];
+        Product[] products = new Product[7];
+
+        // Инициализация продуктов
+        products[0] = new Product("Хлеб", 40);
+        products[1] = new Product("Молоко", 60);
+        products[2] = new Product("Торт", 1000);
+        products[3] = new Product("Кофе растворимый", 879);
+        products[4] = new Product("Масло", 150);
+        products[5] = new Product("Мороженое",200);
+        products[6] = new Product("Макароны",800);
 
 
+        // Инициализация покупателей
+        people[0] = new Person("Павел Андреевич", 10000);
+        people[1] = new Person("Анна Петровна", 2000);
+        people[2] = new Person("Борис", 10);
+        people[3] = new Person("Женя", 0);
+        people[4] = new Person("Света", 3);
 
+        // Цикл покупки продуктов
+        for (Person person : people) {
+            System.out.println(person.getName() + " - Начинает покупки");
+            while (true) {
+                System.out.print("Введите продукт (или END для завершения): ");
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("END")) break;
 
+                Product selectedProduct = null;
+                for (Product product : products) {
+                    if (product.getName().equalsIgnoreCase(input)) {
+                        selectedProduct = product;
+                        break;
+                    }
+                }
+
+                if (selectedProduct != null) {
+                    person.buyProduct(selectedProduct);
+                } else {
+                    System.out.println("Продукт не найден!");
+                }
+            }
+            System.out.println(person); // Выводим результаты покупок
+        }
+
+        scanner.close();
+    }
+}
+
+*/

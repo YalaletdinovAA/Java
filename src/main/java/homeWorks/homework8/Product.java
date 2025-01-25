@@ -4,9 +4,30 @@ import java.util.Objects;
 
 public class Product {
     private String name;
-    private int price;
+    private double price;
 
-    public Product() {
+    public Product(String name, double price) {
+        if (name == null || name.isEmpty()) {
+            System.out.println("Название продукта не может быть пустым");
+            this.name = "";
+        } else {
+            this.name = name;
+        }
+
+        if (price < 0) {
+            System.out.println("Стоимость продукта не может быть отрицательной");
+            this.price = 0;
+        } else {
+            this.price = price;
+        }
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public String getName() {
@@ -14,23 +35,7 @@ public class Product {
     }
 
     public void setName(String name) {
-        if (name.isEmpty()) {
-            System.out.println("Название продукта не может быть пустой строкой.");
-        } else {
-            this.name = name;
-        }
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        if (price < 0){
-            System.out.println("Стоимость продукта не может быть отрицательным числом.");
-        }else{
-            this.price = price;
-        }
+        this.name = name;
     }
 
     @Override
@@ -38,7 +43,7 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return price == product.price && Objects.equals(name, product.name);
+        return Double.compare(price, product.price) == 0 && Objects.equals(name, product.name);
     }
 
     @Override
