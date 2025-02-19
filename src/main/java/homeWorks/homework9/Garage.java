@@ -6,8 +6,6 @@ import java.util.List;
 //Garage – место, где остаются все автомобили, когда они не участвуют в гонках.
 // Гараж   также   предоставляет   возможность   модифицировать припаркованный автомобиль.
 // Включает parkedCars (массив объектов типа Car).
-import java.util.ArrayList;
-import java.util.List;
 
 public class Garage {
     private List<Car> parkedCars;
