@@ -1,0 +1,1 @@
+Person{lastName='Сомов', firstName='Карп', patronymic='Китович', birthDate='13.04.1999', phoneNumber=7988394848, gender=m, age=25}
