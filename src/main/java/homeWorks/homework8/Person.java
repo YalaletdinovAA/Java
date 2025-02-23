@@ -2,6 +2,7 @@ package src.main.java.homeworks.homework8;
 
 import java.util.ArrayList;
 import java.util.List;
+import src.main.java.homeworks.homework8.Product;
 
 public class Person {
     private String name;

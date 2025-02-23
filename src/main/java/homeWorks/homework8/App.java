@@ -2,6 +2,7 @@ package src.main.java.homeworks.homework8;
 
 import java.io.*;
 import java.util.*;
+import src.main.java.homeworks.homework8.Product;
 
 public class App {
     public static void main(String[] args) {
