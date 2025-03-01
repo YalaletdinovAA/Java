@@ -22,17 +22,17 @@ public class Main {
             return;
         }
 
-        Person person = new Person();
+        src.main.java.homeworks.homework012.Person person = new src.main.java.homeworks.homework012.Person();
         try {
             parseData(data, person);
             saveToFile(person);
             System.out.println("Данные успешно записаны в файл.");
-        } catch (PersonDataException | IOException e) {
+        } catch (src.main.java.homeworks.homework012.PersonDataException | IOException e) {
             System.err.println("Ошибка: " + e.getMessage());
         }
     }
 
-    private static void parseData(String[] data, Person person) throws PersonDataException {
+    private static void parseData(String[] data, src.main.java.homeworks.homework012.Person person) throws src.main.java.homeworks.homework012.PersonDataException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         dateFormat.setLenient(false);
 
@@ -82,12 +82,12 @@ public class Main {
             } else if (person.getPatronymic() == null) {
                 person.setPatronymic(item);
             } else {
-                throw new PersonDataException("Неверный формат данных: " + item);
+                throw new src.main.java.homeworks.homework012.PersonDataException("Неверный формат данных: " + item);
             }
         }
     }
 
-    private static void saveToFile(Person person) throws IOException {
+    private static void saveToFile(src.main.java.homeworks.homework012.Person person) throws IOException {
         String fileName = person.getLastName() + ".txt";
         try (FileWriter writer = new FileWriter(fileName, true)) {
             writer.write(person.toString() + "\n");
