@@ -1,2 +1,0 @@
-Иванов Иван Иванович 22.02.2000 787676876767 f 25
-Person{lastName='Иванов', firstName='Иван', patronymic='Батькович', birthDate='22.08.2000', phoneNumber=7987786786, gender=f, age=24}
