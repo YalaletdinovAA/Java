@@ -2,7 +2,6 @@ package src.main.java.homeworks.homework8;
 
 import java.io.*;
 import java.util.*;
-import src.main.java.homeworks.homework8.Product;
 
 public class App {
     public static void main(String[] args) {
@@ -11,8 +10,8 @@ public class App {
         String outputFile = "src/main/java/homeworks/homework8/output.txt"; // Путь к выходному файлу
 
 
-        List<Person> customers = new ArrayList<>();
-        Map<String, Product> productCatalog = new HashMap<>();
+        List<src.main.java.homeworks.homework8.Person> customers = new ArrayList<>();
+        Map<String, src.main.java.homeworks.homework8.Product> productCatalog = new HashMap<>();
         List<String> actions = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
@@ -32,7 +31,7 @@ public class App {
                     String name = details[0].trim();
                     try {
                         double money = Double.parseDouble(details[1].trim());
-                        customers.add(new Person(name, money));
+                        customers.add(new src.main.java.homeworks.homework8.Person(name, money));
                     } catch (NumberFormatException e) {
                         System.out.println("Ошибка преобразования денег: " + customerData);
                     }
@@ -53,7 +52,7 @@ public class App {
                     String name = details[0].trim();
                     try {
                         double price = Double.parseDouble(details[1].trim());
-                        productCatalog.put(name, new Product(name, price));
+                        productCatalog.put(name, new src.main.java.homeworks.homework8.Product(name, price));
                     } catch (NumberFormatException e) {
                         System.out.println("Ошибка преобразования цены: " + productInfo);
                     }
@@ -79,11 +78,11 @@ public class App {
                 String customerName = details[0] + " " + details[1];
                 String productName = details.length > 2 ? action.substring(customerName.length()).trim() : "";
 
-                Person customer = customers.stream()
+                src.main.java.homeworks.homework8.Person customer = customers.stream()
                         .filter(c -> c.getName().equals(customerName))
                         .findFirst()
                         .orElse(null);
-                Product product = productCatalog.get(productName);
+                src.main.java.homeworks.homework8.Product product = productCatalog.get(productName);
 
                 if (customer != null && product != null) {
                     customer.addProduct(product);
@@ -94,7 +93,7 @@ public class App {
 
             // Запись результатов в файл
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
-                for (Person customer : customers) {
+                for (src.main.java.homeworks.homework8.Person customer : customers) {
                     writer.write(customer.toString());
                     writer.newLine();
                 }
