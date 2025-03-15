@@ -1,0 +1,5 @@
+App.class
+repositories\UsersRepository.class
+exceptions\ValidationException.class
+repositories\impl\UsersRepositoryFileImpl.class
+model\User.class
