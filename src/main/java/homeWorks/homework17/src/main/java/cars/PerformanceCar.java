@@ -1,17 +1,23 @@
-package src.main.java.homeworks.homework9;
+package cars;
 
-// Имеет дополнения addOns (массив строк, по умолчанию – пустой)
-// Увеличенная мощность двигателя на 50%.Уменьшенная подвеска на 25%
+import lombok.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PerformanceCar extends src.main.java.homeworks.homework9.Car {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+
+public class PerformanceCar extends Car {
     private List<String> addOns;
 
 
-    public PerformanceCar() {
-    }
+   // public PerformanceCar() {
+    //}
 
     public PerformanceCar(String brand, String model, int year, int horsepower, int acceleration, int suspension, int durability) {
         super(brand, model, year, (int) (horsepower * 1.5), acceleration, (int) (suspension * 0.75), durability);
@@ -30,7 +36,7 @@ public class PerformanceCar extends src.main.java.homeworks.homework9.Car {
     public void addAddOn(String addOn) {
         this.addOns.add(addOn);
     }
-
+/*
     @Override
     public String toString() {
         return "PerformanceCar{" +
@@ -57,5 +63,5 @@ public class PerformanceCar extends src.main.java.homeworks.homework9.Car {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), addOns);
-    }
+    }*/
 }
