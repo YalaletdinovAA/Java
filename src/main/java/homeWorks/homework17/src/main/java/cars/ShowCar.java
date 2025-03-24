@@ -1,11 +1,15 @@
-package src.main.java.homeworks.homework9;
+package cars;
 
-//ShowCar – спортивная машина. Looking cool there, bro.
-// Включает поле stars (int). (по умолчанию – 0), поле для оценки популярности автомобиля.
+import lombok.*;
 
 import java.util.Objects;
 
-public class ShowCar extends src.main.java.homeworks.homework9.Car {
+@Getter
+@Setter
+@AllArgsConstructor
+@ToString
+
+public class ShowCar extends Car {
     private int stars;
 
     public ShowCar() {
@@ -17,7 +21,7 @@ public class ShowCar extends src.main.java.homeworks.homework9.Car {
         super(brand, model, year, horsepower, acceleration, suspension, durability);
         this.stars = 0;
     }
-
+/*
     public int getStars() {
         return stars;
     }
@@ -52,5 +56,5 @@ public class ShowCar extends src.main.java.homeworks.homework9.Car {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), stars);
-    }
+    }*/
 }

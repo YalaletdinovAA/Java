@@ -1,14 +1,23 @@
-package src.main.java.homeworks.homework9;
+package races;
 
+import lombok.*;
+
+import cars.Car;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 
 public class Race {
     private int length;
     private String route;
     private int prizePool;
-    private List<src.main.java.homeworks.homework9.Car> participants;
+    private List<Car> participants;
 
     public Race() {
     }
@@ -19,7 +28,7 @@ public class Race {
         this.prizePool = prizePool;
         this.participants = new ArrayList<>();
     }
-
+/*
     public int getLength() {
         return length;
     }
@@ -44,18 +53,16 @@ public class Race {
         this.prizePool = prizePool;
     }
 
-    public List<src.main.java.homeworks.homework9.Car> getParticipants() {
-        return participants;
-    }
 
-    public void setParticipants(List<src.main.java.homeworks.homework9.Car> participants) {
+
+    public void setParticipants(List<Car> participants) {
         this.participants = participants;
     }
-
-    public void addParticipant(src.main.java.homeworks.homework9.Car car) {
+*/
+    public void addParticipant(Car car) {
         this.participants.add(car);
     }
-
+/*
     @Override
     public String toString() {
         return "Race{" +
@@ -77,5 +84,5 @@ public class Race {
     @Override
     public int hashCode() {
         return Objects.hash(length, route, prizePool, participants);
-    }
+    }*/
 }

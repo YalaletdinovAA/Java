@@ -1,6 +1,11 @@
-package src.main.java.homeworks.homework9;
+package races;
 
-public class DriftRace extends src.main.java.homeworks.homework9.Race {
+import lombok.*;
+
+@Getter
+@Setter
+
+public class DriftRace extends Race {
 
     public DriftRace() {
     }

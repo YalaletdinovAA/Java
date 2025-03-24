@@ -1,0 +1,4 @@
+Toyota|Corolla|2020|150|9|7|200
+Ferrari|F8|2023|750|8|3|300
+Lamborghini|Aventador|2023|700|5|10|250
+

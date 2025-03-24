@@ -8,27 +8,27 @@ import java.util.List;
 // Включает parkedCars (массив объектов типа Car).
 
 public class Garage {
-    private List<Car> parkedCars;
+    private List<src.main.java.homeworks.homework9.Car> parkedCars;
 
     public Garage() {
         this.parkedCars = new ArrayList<>();
     }
 
-    public List<Car> getParkedCars() {
+    public List<src.main.java.homeworks.homework9.Car> getParkedCars() {
         return parkedCars;
     }
 
-    public void setParkedCars(List<Car> parkedCars) {
+    public void setParkedCars(List<src.main.java.homeworks.homework9.Car> parkedCars) {
         this.parkedCars = parkedCars;
     }
 
     // Добавление автомобиля в гараж
-    public void parkCar(Car car) {
+    public void parkCar(src.main.java.homeworks.homework9.Car car) {
         this.parkedCars.add(car);
     }
 
     // Удаление автомобиля из гаража
-    public void unparkCar(Car car) {
+    public void unparkCar(src.main.java.homeworks.homework9.Car car) {
         this.parkedCars.remove(car);
     }
 
