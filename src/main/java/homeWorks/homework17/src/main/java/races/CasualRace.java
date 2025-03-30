@@ -1,10 +1,10 @@
 package races;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
-
 public class CasualRace extends Race {
 
     public CasualRace() {

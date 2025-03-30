@@ -1,2 +1,0 @@
-PerformanceCar,Ferrari,488,2021,700,3,10,200,Turbo Boost,Nitrous Oxide
-Car,Toyota,Corolla,2019,150,10,8,100

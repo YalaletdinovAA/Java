@@ -1,23 +1,19 @@
 package cars;
-
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-
+@Getter
 public class PerformanceCar extends Car {
     private List<String> addOns;
 
 
-   // public PerformanceCar() {
-    //}
+    public PerformanceCar() {
+    }
 
     public PerformanceCar(String brand, String model, int year, int horsepower, int acceleration, int suspension, int durability) {
         super(brand, model, year, (int) (horsepower * 1.5), acceleration, (int) (suspension * 0.75), durability);
@@ -25,21 +21,13 @@ public class PerformanceCar extends Car {
     }
 
 
-    public List<String> getAddOns() {
-        return addOns;
-    }
-
-    public void setAddOns(List<String> addOns) {
-        this.addOns = addOns;
-    }
-
     public void addAddOn(String addOn) {
         this.addOns.add(addOn);
     }
-/*
+
     @Override
     public String toString() {
-        return "PerformanceCar{" +
+        return "cars.PerformanceCar{" +
                 "brand='" + getBrand() + '\'' +
                 ", model='" + getModel() + '\'' +
                 ", year=" + getYear() +
@@ -63,5 +51,5 @@ public class PerformanceCar extends Car {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), addOns);
-    }*/
+    }
 }

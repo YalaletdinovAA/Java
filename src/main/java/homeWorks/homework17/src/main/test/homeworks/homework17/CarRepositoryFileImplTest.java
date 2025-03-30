@@ -1,77 +1,94 @@
 package homeworks.homework17;
 
 import cars.Car;
-import cars.PerformanceCar;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import repositories.impl.CarRepositoryFileImpl;
+import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CarRepositoryFileImplTest {
+    private static final String TEST_FILE = "test_cars.dat";
     private CarRepositoryFileImpl repository;
 
     @BeforeEach
     void setUp() {
-        repository = new CarRepositoryFileImpl("src/main/java/homeworks/homework17/src/main/test/resources/test_cars.txt");
-        repository.deleteAll(); // Очищаем данные перед каждым тестом
+        repository = new CarRepositoryFileImpl(TEST_FILE);
+    }
+
+    @AfterEach
+    void tearDown() {
+        new File(TEST_FILE).delete();
     }
 
     @Test
-    void testCreateAndFindById() {
-        Car car = new Car("Toyota", "Corolla", 2019, 150, 10, 8, 100);
-        repository.create(car);
+    void testSaveAndFindById() {
+        Car car = new Car("Toyota", "Camry", 2020, 200, 8, 7, 5);
+        repository.save(car);
 
-        Car foundCar = repository.findById(car.getId());
-        assertNotNull(foundCar);
-        assertEquals(car.getBrand(), foundCar.getBrand());
-        assertEquals(car.getModel(), foundCar.getModel());
+        Optional<Car> found = repository.findById("Toyota:Camry:2020");
+        assertTrue(found.isPresent());
+        assertEquals(car, found.get());
     }
 
     @Test
     void testFindAll() {
-        Car car1 = new Car("Toyota", "Corolla", 2019, 150, 10, 8, 100);
-        Car car2 = new PerformanceCar("Ferrari", "488", 2021, 700, 3, 10, 200);
-        repository.create(car1);
-        repository.create(car2);
+        Car car1 = new Car("Toyota", "Camry", 2020, 200, 8, 7, 5);
+        Car car2 = new Car("Honda", "Accord", 2021, 190, 7, 8, 6);
+
+        repository.save(car1);
+        repository.save(car2);
 
         List<Car> cars = repository.findAll();
         assertEquals(2, cars.size());
+        assertTrue(cars.contains(car1));
+        assertTrue(cars.contains(car2));
+    }
+
+    @Test
+    void testDelete() {
+        Car car = new Car("Toyota", "Camry", 2020, 200, 8, 7, 5);
+        repository.save(car);
+
+        boolean deleted = repository.delete("Toyota:Camry:2020");
+        assertTrue(deleted);
+        assertFalse(repository.findById("Toyota:Camry:2020").isPresent());
     }
 
     @Test
     void testUpdate() {
-        Car car = new Car("Toyota", "Corolla", 2019, 150, 10, 8, 100);
-        repository.create(car);
+        Car original = new Car("Toyota", "Camry", 2020, 200, 8, 7, 5);
+        repository.save(original);
 
-        car.setModel("Camry");
-        repository.update(car);
+        Car updated = new Car("Toyota", "Camry", 2020, 250, 7, 8, 6);
+        Car result = repository.update(updated);
 
-        Car updatedCar = repository.findById(car.getId());
-        assertEquals("Camry", updatedCar.getModel());
+        assertEquals(updated, result);
+        assertEquals(updated, repository.findById("Toyota:Camry:2020").get());
     }
 
     @Test
-    void testDeleteById() {
-        Car car = new Car("Toyota", "Corolla", 2019, 150, 10, 8, 100);
-        repository.create(car);
+    void testSaveAll() {
+        Car car1 = new Car("Toyota", "Camry", 2020, 200, 8, 7, 5);
+        Car car2 = new Car("Honda", "Accord", 2021, 190, 7, 8, 6);
 
-        repository.deleteById(car.getId());
-        Car deletedCar = repository.findById(car.getId());
-        assertNull(deletedCar);
+        repository.saveAll(List.of(car1, car2));
+
+        assertEquals(2, repository.findAll().size());
     }
 
     @Test
-    void testDeleteAll() {
-        Car car1 = new Car("Toyota", "Corolla", 2019, 150, 10, 8, 100);
-        Car car2 = new PerformanceCar("Ferrari", "488", 2021, 700, 3, 10, 200);
-        repository.create(car1);
-        repository.create(car2);
+    void testPersistence() {
+        Car car = new Car("Toyota", "Camry", 2020, 200, 8, 7, 5);
+        repository.save(car);
 
-        repository.deleteAll();
-        List<Car> cars = repository.findAll();
-        assertTrue(cars.isEmpty());
+        // Create new repository instance to test file loading
+        CarRepositoryFileImpl newRepo = new CarRepositoryFileImpl(TEST_FILE);
+        Optional<Car> loaded = newRepo.findById("Toyota:Camry:2020");
+
+        assertTrue(loaded.isPresent());
+        assertEquals(car, loaded.get());
     }
-
 }

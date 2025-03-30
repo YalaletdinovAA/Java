@@ -2,21 +2,28 @@ import cars.Car;
 import cars.PerformanceCar;
 import cars.ShowCar;
 import races.CasualRace;
-
+import repositories.CarRepositoryFile;
+import repositories.impl.CarRepositoryFileImpl;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 public class App {
+    private static final String DATA_FILE = "src/main/java/homeworks/homework17/src/resources/cars_data.txt";
+    private static final String REPOSITORY_FILE = "src/main/java/homeworks/homework17/src/resources/testResources/cars_repository.dat";
+
     public static void main(String[] args) {
-        // Создаем автомобили
-        Car car1 = new Car("Toyota", "Corolla", 2019, 150, 10, 8, 100);
-        PerformanceCar car2 = new PerformanceCar("Ferrari", "488", 2021, 700, 3, 10, 200);
-        ShowCar car3 = new ShowCar("Lamborghini", "Aventador", 2022, 800, 2, 12, 300);
+        // Инициализация репозитория
+        CarRepositoryFile repository = new CarRepositoryFileImpl(REPOSITORY_FILE);
 
-        // Добавляем дополнения для PerformanceCar
-        car2.addAddOn("Turbo Boost");
-        car2.addAddOn("Nitrous Oxide");
+        // Загрузка данных из файла
+        loadInitialData(repository);
 
-        // Устанавливаем звезды для ShowCar
-        car3.setStars(5);
+        // Создаем автомобили (теперь они берутся из репозитория)
+        Car car1 = repository.findById("Lada:Granta:2019").orElseThrow();
+        PerformanceCar car2 = (PerformanceCar) repository.findById("Porshe:911:2021").orElseThrow();
+        ShowCar car3 = (ShowCar) repository.findById("Chevrole:Camaro:2022").orElseThrow();
 
         // Создаем гонку
         CasualRace race = new CasualRace(100, "City Circuit", 50000);
@@ -24,17 +31,52 @@ public class App {
         race.addParticipant(car2);
         race.addParticipant(car3);
 
-        // Создаем гараж
-        Garage garage = new Garage();
-        garage.parkCar(car1);
-        garage.parkCar(car2);
-        garage.parkCar(car3);
-
         // Выводим информацию
-        System.out.println(car1);
-        System.out.println(car2);
-        System.out.println(car3);
+        System.out.println("All cars in repository:");
+        repository.findAll().forEach(System.out::println);
+
+        System.out.println("\nRace participants:");
         System.out.println(race);
-        System.out.println(garage);
+
+        // Пример работы с репозиторием
+        System.out.println("\nUpdating car...");
+        Car updatedCar = new Car("Lada", "Granta", 2019, 180, 9, 9, 120);
+        repository.update(updatedCar);
+        System.out.println("Updated car: " + repository.findById("Lada:Granta:2019").get());
+    }
+
+    private static void loadInitialData(CarRepositoryFile repository) {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(DATA_FILE));
+            for (String line : lines) {
+                if (line.startsWith("#") || line.trim().isEmpty()) continue;
+
+                String[] parts = line.split(",");
+                switch (parts[0]) {
+                    case "Car":
+                        repository.save(new Car(
+                                parts[1], parts[2], Integer.parseInt(parts[3]),
+                                Integer.parseInt(parts[4]), Integer.parseInt(parts[5]),
+                                Integer.parseInt(parts[6]), Integer.parseInt(parts[7])));
+                        break;
+                    case "PerformanceCar":
+                        PerformanceCar pCar = new PerformanceCar(
+                                parts[1], parts[2], Integer.parseInt(parts[3]),
+                                Integer.parseInt(parts[4]), Integer.parseInt(parts[5]),
+                                Integer.parseInt(parts[6]), Integer.parseInt(parts[7]));
+                        repository.save(pCar);
+                        break;
+                    case "ShowCar":
+                        ShowCar sCar = new ShowCar(
+                                parts[1], parts[2], Integer.parseInt(parts[3]),
+                                Integer.parseInt(parts[4]), Integer.parseInt(parts[5]),
+                                Integer.parseInt(parts[6]), Integer.parseInt(parts[7]));
+                        repository.save(sCar);
+                        break;
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error loading initial data: " + e.getMessage());
+        }
     }
 }
