@@ -1,2 +1,0 @@
-Toyota|Corolla|2019|150|10|8|100
-Toyota|Camry|2019|150|10|8|100

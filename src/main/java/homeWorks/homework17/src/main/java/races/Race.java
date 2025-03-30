@@ -1,17 +1,17 @@
 package races;
 
-import lombok.*;
-
 import cars.Car;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
-@EqualsAndHashCode
-@ToString
 
 public class Race {
     private int length;
@@ -28,44 +28,14 @@ public class Race {
         this.prizePool = prizePool;
         this.participants = new ArrayList<>();
     }
-/*
-    public int getLength() {
-        return length;
-    }
 
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public String getRoute() {
-        return route;
-    }
-
-    public void setRoute(String route) {
-        this.route = route;
-    }
-
-    public int getPrizePool() {
-        return prizePool;
-    }
-
-    public void setPrizePool(int prizePool) {
-        this.prizePool = prizePool;
-    }
-
-
-
-    public void setParticipants(List<Car> participants) {
-        this.participants = participants;
-    }
-*/
     public void addParticipant(Car car) {
         this.participants.add(car);
     }
-/*
+
     @Override
     public String toString() {
-        return "Race{" +
+        return "races.Race{" +
                 "length=" + length +
                 ", route='" + route + '\'' +
                 ", prizePool=" + prizePool +
@@ -84,5 +54,5 @@ public class Race {
     @Override
     public int hashCode() {
         return Objects.hash(length, route, prizePool, participants);
-    }*/
+    }
 }

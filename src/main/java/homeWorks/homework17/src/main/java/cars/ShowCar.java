@@ -1,14 +1,11 @@
 package cars;
 
-import lombok.*;
-
+import lombok.Getter;
+import lombok.Setter;
 import java.util.Objects;
 
-@Getter
 @Setter
-@AllArgsConstructor
-@ToString
-
+@Getter
 public class ShowCar extends Car {
     private int stars;
 
@@ -21,18 +18,10 @@ public class ShowCar extends Car {
         super(brand, model, year, horsepower, acceleration, suspension, durability);
         this.stars = 0;
     }
-/*
-    public int getStars() {
-        return stars;
-    }
-
-    public void setStars(int stars) {
-        this.stars = stars;
-    }
 
     @Override
     public String toString() {
-        return "ShowCar{" +
+        return "cars.ShowCar{" +
                 "brand='" + getBrand() + '\'' +
                 ", model='" + getModel() + '\'' +
                 ", year=" + getYear() +
@@ -56,5 +45,5 @@ public class ShowCar extends Car {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), stars);
-    }*/
+    }
 }
