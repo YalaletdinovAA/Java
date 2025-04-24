@@ -21,12 +21,27 @@ public class Television {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)  // Обязательное поле
     private String brand;
+
+    @Column(nullable = false)
     private String model;
+
+    @Column(nullable = false)
     private double price;
+
+    @Column(nullable = false)
     private double diagonal;
+
+    @Column(nullable = false)
     private String resolution;
+
+    @Column(nullable = false)
     private boolean smartTv;
+
+
+    @Column(nullable = false)
+    private int screenSize;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
