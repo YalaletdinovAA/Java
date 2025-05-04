@@ -6,6 +6,9 @@ import com.pizzeria.model.Pizza;
 import com.pizzeria.repository.PizzaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.modelmapper.ModelMapper;
 
 import java.math.BigDecimal;
@@ -14,17 +17,20 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 class PizzaServiceTest {
 
+    @MockBean
     private PizzaRepository pizzaRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
     private PizzaService pizzaService;
 
     @BeforeEach
     void setUp() {
-        pizzaRepository = mock(PizzaRepository.class);
-        modelMapper = new ModelMapper();
-        pizzaService = new PizzaService(pizzaRepository, modelMapper);
     }
 
     // получение данных пиццы в формате DTO по её ID
@@ -50,7 +56,6 @@ class PizzaServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> pizzaService.getPizzaById(2L));
     }
 
-
     // создание новой пиццы
     @Test
     void createPizza_shouldCreateAndReturnPizzaDTO() {
@@ -66,7 +71,7 @@ class PizzaServiceTest {
         assertEquals("Pepperoni", result.getName());
     }
 
-    //  защита от создания пицц с дублирующимися именами
+    // защита от создания пицц с дублирующимися именами
     @Test
     void createPizza_shouldThrowIfNameExists() {
         PizzaDTO pizzaDTO = new PizzaDTO();
@@ -76,7 +81,6 @@ class PizzaServiceTest {
 
         assertThrows(IllegalArgumentException.class, () -> pizzaService.createPizza(pizzaDTO));
     }
-
 
     // статус доступности пиццы
     @Test

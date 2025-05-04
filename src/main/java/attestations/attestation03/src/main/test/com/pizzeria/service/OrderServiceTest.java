@@ -4,11 +4,13 @@ import com.pizzeria.dto.OrderItemRequest;
 import com.pizzeria.dto.OrderRequest;
 import com.pizzeria.dto.OrderResponse;
 import com.pizzeria.exception.BadRequestException;
-import com.pizzeria.exception.ResourceNotFoundException;
 import com.pizzeria.model.*;
 import com.pizzeria.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.modelmapper.ModelMapper;
 
 import java.math.BigDecimal;
@@ -18,25 +20,29 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 class OrderServiceTest {
 
+    @MockBean
     private OrderRepository orderRepository;
+
+    @MockBean
     private CustomerRepository customerRepository;
+
+    @MockBean
     private PizzaRepository pizzaRepository;
+
+    @MockBean
     private OrderItemRepository orderItemRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
     private OrderService orderService;
 
     @BeforeEach
     void setup() {
-        orderRepository = mock(OrderRepository.class);
-        customerRepository = mock(CustomerRepository.class);
-        pizzaRepository = mock(PizzaRepository.class);
-        orderItemRepository = mock(OrderItemRepository.class);
-        modelMapper = new ModelMapper();
-
-        orderService = new OrderService(orderRepository, customerRepository, pizzaRepository, orderItemRepository, modelMapper);
     }
 
     // проверяет успешное создание заказа
@@ -101,7 +107,6 @@ class OrderServiceTest {
         assertEquals(OrderStatus.CANCELLED, order.getStatus());
         verify(orderRepository).save(order);
     }
-
 
     // проверяет корректную обработку попытки заказа недоступной пиццы
     @Test
